@@ -841,9 +841,23 @@
 	{
 		[document.bookmarks addIndex:currentPage]; [mainToolbar setBookmarkState:YES];
 	}
+    
+#if (READER_SAVE_ONTHEFLY == TRUE)
+    [document archiveDocumentProperties];
+#endif
 
 #endif // end of READER_BOOKMARKS Option
 }
+
+#if (READER_WITH_DUALPDF == TRUE)
+- (void)tappedInToolbar:(ReaderMainToolbar *)toolbar dualPDFButton:(UIButton *)button
+{
+    if ([delegate respondsToSelector:@selector(dualPDFButtonClicked:)] == YES)
+    {
+        [delegate dualPDFButtonClicked:self]; // Dismiss the ReaderViewController
+    }
+}
+#endif
 
 #pragma mark - MFMailComposeViewControllerDelegate methods
 

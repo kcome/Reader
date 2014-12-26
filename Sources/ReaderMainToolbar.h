@@ -41,6 +41,10 @@
 - (void)tappedInToolbar:(ReaderMainToolbar *)toolbar emailButton:(UIButton *)button;
 - (void)tappedInToolbar:(ReaderMainToolbar *)toolbar markButton:(UIButton *)button;
 
+#if (READER_WITH_DUALPDF == TRUE)
+- (void)tappedInToolbar:(ReaderMainToolbar *)toolbar dualPDFButton:(UIButton *)button;
+#endif
+
 @end
 
 @interface ReaderMainToolbar : UIXToolbarView

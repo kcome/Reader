@@ -71,10 +71,13 @@ static CGFloat g_BugFixWidthInset = 0.0f;
 static inline CGFloat zoomScaleThatFits(CGSize target, CGSize source)
 {
 	CGFloat w_scale = (target.width / (source.width + g_BugFixWidthInset));
-
-	CGFloat h_scale = (target.height / source.height);
-
-	return ((w_scale < h_scale) ? w_scale : h_scale);
+#if (READER_WITH_DUALPDF == TRUE)
+    return w_scale;
+#else
+    CGFloat h_scale = (target.height / source.height);
+    
+    return ((w_scale < h_scale) ? w_scale : h_scale);
+#endif
 }
 
 #pragma mark - ReaderContentView class methods

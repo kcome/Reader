@@ -155,6 +155,7 @@
 
 #endif // end of READER_BOOKMARKS Option
 
+#if (READER_DISABLE_EMAIL == FALSE)
 		if (document.canEmail == YES) // Document email enabled
 		{
 			if ([MFMailComposeViewController canSendMail] == YES) // Can email
@@ -179,7 +180,7 @@
 				}
 			}
 		}
-
+#endif
 		if ((document.canPrint == YES) && (document.password == nil)) // Document print enabled
 		{
 			Class printInteractionController = NSClassFromString(@"UIPrintInteractionController");
@@ -219,6 +220,21 @@
 			[self addSubview:exportButton]; titleWidth -= (iconButtonWidth + buttonSpacing);
 		}
 
+#if (READER_WITH_DUALPDF == TRUE)
+        rightButtonX -= (iconButtonWidth + buttonSpacing); // Next position
+        
+        UIButton *dualPDFButton = [UIButton buttonWithType:UIButtonTypeCustom];
+        dualPDFButton.frame = CGRectMake(rightButtonX, BUTTON_Y, iconButtonWidth, BUTTON_HEIGHT);
+        [dualPDFButton setImage:[UIImage imageNamed:@"Reader-DualPDF"] forState:UIControlStateNormal];
+        [dualPDFButton addTarget:self action:@selector(dualPDFButtonTapped:) forControlEvents:UIControlEventTouchUpInside];
+        [dualPDFButton setBackgroundImage:buttonH forState:UIControlStateHighlighted];
+        [dualPDFButton setBackgroundImage:buttonN forState:UIControlStateNormal];
+        dualPDFButton.autoresizingMask = UIViewAutoresizingFlexibleLeftMargin;
+        dualPDFButton.exclusiveTouch = YES;
+        
+        [self addSubview:dualPDFButton]; titleWidth -= (iconButtonWidth + buttonSpacing);
+#endif
+        
 		if (largeDevice == YES) // Show document filename in toolbar
 		{
 			CGRect titleRect = CGRectMake(titleX, BUTTON_Y, titleWidth, TITLE_HEIGHT);
@@ -353,4 +369,10 @@
 	[delegate tappedInToolbar:self markButton:button];
 }
 
+#if (READER_WITH_DUALPDF == TRUE)
+- (void)dualPDFButtonTapped:(UIButton *)button
+{
+    [delegate tappedInToolbar:self dualPDFButton:button];
+}
+#endif
 @end

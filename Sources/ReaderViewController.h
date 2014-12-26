@@ -35,6 +35,10 @@
 
 - (void)dismissReaderViewController:(ReaderViewController *)viewController;
 
+#if (READER_WITH_DUALPDF == TRUE)
+- (void)dualPDFButtonClicked:(ReaderViewController *)viewController;
+#endif
+
 @end
 
 @interface ReaderViewController : UIViewController
